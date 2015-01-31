@@ -4,47 +4,52 @@ import java.util.*;
  */
 public class Player {
 
+    private String name;
     // the player's dice pool
-    private ArrayList<Dice> playerRolls;
-    Scanner s = new Scanner(System.in);
+    private ArrayList<Dice> dicePool;
 
     // add a die to the dice pool
     public void addToPlayerRolls() {
-        System.out.print("\nEnter the number of sides on the die >>> ");
-        int userSides = Integer.parseInt(s.next());
+        int userSides = Integer.parseInt(GameHelper.getUserInput("\nEnter the number of sides on the die >>> "));
         Dice d = new Dice(userSides);
         d.setRollResult();
-        playerRolls.add(d);
+        dicePool.add(d);
     }
     // remove a die from the dice pool
     public void removeFromPlayerRolls() {
-        System.out.print("\nEnter the roll result you want to remove >>> ");
-        int aRollResult = Integer.parseInt(s.next());
-
-        for (Dice die : playerRolls) {
+        int aRollResult = Integer.parseInt(GameHelper.getUserInput("\nEnter the roll result you want to remove >>> "));
+        for (Dice die : dicePool) {
             int num = die.getRollResult();
             if (num == aRollResult) {
-                playerRolls.remove(die);
+                dicePool.remove(die);
                 break;
             }
         }
     }
     // print the player's dice pool thus far
-    public void getPlayerRolls() {
-        System.out.print("\nPlayer rolled: ");
-        for (Dice die : playerRolls) {
-            System.out.print(die.getRollResult() + " ");
+    public String getPlayerRolls() {
+        String rolls = "";
+        for (Dice die : dicePool) {
+            rolls += die.getRollResult() + " ";
         }
+        return rolls;
     }
     public int getRollTotal() {
         int total=0;
-        for (Dice die : playerRolls) {
+        for (Dice die : dicePool) {
             total += die.getRollResult();
         }
         return total;
     }
     public Player() {
-        playerRolls = new ArrayList<Dice>();
+        dicePool = new ArrayList<Dice>();
+    }
+
+    public void setName(String n) {
+        name = n;
+    }
+    public String getName() {
+        return name;
     }
 
 }
